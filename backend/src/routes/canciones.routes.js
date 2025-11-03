@@ -6,7 +6,7 @@ import {
   getCancionById,
   createCancion,
   updateCancion,
-  deleteCancion 
+  deleteCancion,
 } from '../controllers/canciones.controller.js';
 
 const router = Router();

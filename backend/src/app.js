@@ -5,7 +5,7 @@ import cors from 'cors';
 import cancionesRouter from './routes/canciones.routes.js';
 import usuariosRouter from './routes/usuarios.routes.js';
 import votosRouter from './routes/votos.routes.js';
-import eventosRouter from './routes/eventos.routes.js'; 
+import eventosRouter from './routes/eventos.routes.js';
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 app.use('/api/canciones', cancionesRouter);
 app.use('/api/usuarios', usuariosRouter);
 app.use('/api/solicitudes', votosRouter);
-app.use('/api/eventos', eventosRouter); 
+app.use('/api/eventos', eventosRouter);
 
 // Export
 export default app;

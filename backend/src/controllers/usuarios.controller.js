@@ -43,7 +43,10 @@ export const createUsuario = async (req, res) => {
       return res.status(400).json({ message: 'El nombre es requerido.' });
     }
     conn = await pool.getConnection();
-    const result = await conn.query('INSERT INTO usuarios (nombre) VALUES (?);', [nombre]);
+    const result = await conn.query(
+      'INSERT INTO usuarios (nombre) VALUES (?);',
+      [nombre]
+    );
     res.status(201).json({
       id: Number(result.insertId),
       nombre,
@@ -66,7 +69,10 @@ export const updateUsuario = async (req, res) => {
       return res.status(400).json({ message: 'El nombre es requerido.' });
     }
     conn = await pool.getConnection();
-    const result = await conn.query('UPDATE usuarios SET nombre = ? WHERE id = ?;', [nombre, id]);
+    const result = await conn.query(
+      'UPDATE usuarios SET nombre = ? WHERE id = ?;',
+      [nombre, id]
+    );
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Usuario no encontrado.' });
     }

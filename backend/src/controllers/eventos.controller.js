@@ -40,10 +40,15 @@ export const createEvento = async (req, res) => {
   try {
     const { nombre } = req.body;
     if (!nombre) {
-      return res.status(400).json({ message: 'El nombre del evento es requerido.' });
+      return res
+        .status(400)
+        .json({ message: 'El nombre del evento es requerido.' });
     }
     conn = await pool.getConnection();
-    const result = await conn.query('INSERT INTO eventos (nombre) VALUES (?);', [nombre]);
+    const result = await conn.query(
+      'INSERT INTO eventos (nombre) VALUES (?);',
+      [nombre]
+    );
     res.status(201).json({
       id: Number(result.insertId),
       nombre,
@@ -66,7 +71,10 @@ export const updateEvento = async (req, res) => {
       return res.status(400).json({ message: 'El nombre es requerido.' });
     }
     conn = await pool.getConnection();
-    const result = await conn.query('UPDATE eventos SET nombre = ? WHERE id = ?;', [nombre, id]);
+    const result = await conn.query(
+      'UPDATE eventos SET nombre = ? WHERE id = ?;',
+      [nombre, id]
+    );
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Evento no encontrado.' });
     }

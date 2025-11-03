@@ -40,15 +40,30 @@ export const createVoto = async (req, res) => {
 
     conn = await pool.getConnection();
 
-    const checkQuery = 'SELECT id FROM votos WHERE usuario_id = ? AND cancion_id = ? AND evento_id = ?;';
-    const existing = await conn.query(checkQuery, [usuario_id, cancion_id, evento_id]);
+    const checkQuery =
+      'SELECT id FROM votos WHERE usuario_id = ? AND cancion_id = ? AND evento_id = ?;';
+    const existing = await conn.query(checkQuery, [
+      usuario_id,
+      cancion_id,
+      evento_id,
+    ]);
 
     if (existing.length > 0) {
-      return res.status(409).json({ message: 'Este usuario ya votó por esta canción en este evento.' });
+      return res
+        .status(409)
+        .json({
+          message: 'Este usuario ya votó por esta canción en este evento.',
+        });
     }
 
-    const insertQuery = 'INSERT INTO votos (usuario_id, cancion_id, evento_id, cantidad) VALUES (?, ?, ?, ?);';
-    const result = await conn.query(insertQuery, [usuario_id, cancion_id, evento_id, cantidad]);
+    const insertQuery =
+      'INSERT INTO votos (usuario_id, cancion_id, evento_id, cantidad) VALUES (?, ?, ?, ?);';
+    const result = await conn.query(insertQuery, [
+      usuario_id,
+      cancion_id,
+      evento_id,
+      cantidad,
+    ]);
 
     res.status(201).json({
       id: Number(result.insertId),
@@ -120,7 +135,9 @@ export const updateVoto = async (req, res) => {
     const { cantidad } = req.body;
 
     if (!cantidad || isNaN(cantidad)) {
-      return res.status(400).json({ message: 'La cantidad es requerida y debe ser un número.' });
+      return res
+        .status(400)
+        .json({ message: 'La cantidad es requerida y debe ser un número.' });
     }
 
     conn = await pool.getConnection();

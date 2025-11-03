@@ -11,7 +11,8 @@ export const getAllCanciones = async (req, res) => {
     let params = [];
 
     if (search) {
-      query = 'SELECT * FROM canciones WHERE titulo LIKE ? OR artista_nombre LIKE ?;';
+      query =
+        'SELECT * FROM canciones WHERE titulo LIKE ? OR artista_nombre LIKE ?;';
       params = [`%${search}%`, `%${search}%`];
     } else {
       query = 'SELECT * FROM canciones;';
@@ -53,10 +54,13 @@ export const createCancion = async (req, res) => {
   try {
     const { titulo, artista_nombre } = req.body;
     if (!titulo || !artista_nombre) {
-      return res.status(400).json({ message: 'El título y el nombre del artista son requeridos.' });
+      return res
+        .status(400)
+        .json({ message: 'El título y el nombre del artista son requeridos.' });
     }
     conn = await pool.getConnection();
-    const query = 'INSERT INTO canciones (titulo, artista_nombre) VALUES (?, ?);';
+    const query =
+      'INSERT INTO canciones (titulo, artista_nombre) VALUES (?, ?);';
     const result = await conn.query(query, [titulo, artista_nombre]);
     res.status(201).json({
       id: Number(result.insertId),
@@ -78,10 +82,13 @@ export const updateCancion = async (req, res) => {
     const { id } = req.params;
     const { titulo, artista_nombre } = req.body;
     if (!titulo || !artista_nombre) {
-      return res.status(400).json({ message: 'El título y el nombre del artista son requeridos.' });
+      return res
+        .status(400)
+        .json({ message: 'El título y el nombre del artista son requeridos.' });
     }
     conn = await pool.getConnection();
-    const query = 'UPDATE canciones SET titulo = ?, artista_nombre = ? WHERE id = ?;';
+    const query =
+      'UPDATE canciones SET titulo = ?, artista_nombre = ? WHERE id = ?;';
     const result = await conn.query(query, [titulo, artista_nombre, id]);
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Canción no encontrada.' });
@@ -107,8 +114,7 @@ export const deleteCancion = async (req, res) => {
       return res.status(404).json({ message: 'Canción no encontrada.' });
     }
     res.sendStatus(204);
-  } catch (error)
-  {
+  } catch (error) {
     console.error('Ocurrió un error al eliminar la canción:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   } finally {
